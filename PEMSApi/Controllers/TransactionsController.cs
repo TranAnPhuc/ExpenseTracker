@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PEMSApi.Data;
+using PEMSApi.Service;
 using Transaction = PEMSApi.Models.Transaction;
 
 namespace PEMSApi.Controllers
@@ -11,57 +12,19 @@ namespace PEMSApi.Controllers
     public class TransactionsController : ControllerBase
     {
         private readonly AppDbContext _context;
+        private readonly ITransactionService _transactionService;
 
-        public TransactionsController(AppDbContext context)
+        public TransactionsController(AppDbContext context, ITransactionService transactionService)
         {
             _context = context;
+            _transactionService = transactionService;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetTransactions([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
         {
-            var totalIncome = await _context.Transactions
-                    .Include(t => t.Category)
-                    .Where(t => t.Category!.Type == false)
-                    .SumAsync(t => t.Amount);
-
-            var totalExpense = await _context.Transactions
-                    .Include(t => t.Category)
-                    .Where(t => t.Category!.Type == true)
-                    .SumAsync(t => t.Amount);
-
-            var balance = totalIncome - totalExpense;
-
-            var skipAmount = (pageNumber - 1) * pageSize;
-
-            var transactions = await _context.Transactions
-                .OrderByDescending(t => t.TransactionDate)
-                .Skip(skipAmount)
-                .Take(pageSize)
-                .Select(t => new TransactionResponseDto
-                {
-                    Id = t.Id,
-                    Amount = t.Amount,
-                    CategoryName = t.Category != null ? t.Category.Name : "Khong xac dinh",
-                    TransactionDate = t.TransactionDate
-                })
-                .ToListAsync();
-
-            var totalRecords = await _context.Transactions.CountAsync();
-
-            var response = new
-            {
-                Data = transactions,
-                TotalRecords = totalRecords,
-                CurrentPage = pageNumber,
-                PageSize = pageSize,
-                TotalPages = (int)Math.Ceiling(totalRecords / (double)pageSize),
-                TotalIncome = totalIncome,
-                TotalExpense = totalExpense,
-                Balance = balance
-            };
-
-            return Ok(response);
+            var getAllTransactions = await _transactionService.GetAllTransactionAsync(pageNumber, pageSize);
+            return Ok(getAllTransactions);
         }
 
         [HttpGet("categories")]

@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using PEMSApi.Service;
 
 namespace PEMSApi
 {
@@ -17,6 +18,8 @@ namespace PEMSApi
             // Add services to the container.
             builder.Services.AddDbContext<AppDbContext>(options
                 => options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<ITransactionService, TransactionService>();
 
             builder.Services.AddCors(options =>
             {
