@@ -1,0 +1,7 @@
+{
+    "editor.inlineSuggest.edits.renderSideBySide": "auto",
+    "editor.inlineSuggest.edits.allowCodeShifting": "always",
+    "editor.inlineSuggest.enabled": false,
+    "editor.inlineSuggest.edits.showCollapsed": true,
+    "editor.fontSize": 16
+}
