@@ -10,7 +10,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<ICategoryRepository,CategoryRepository>();
+builder.Services.AddScoped<IExpenseRepository,ExpenseRepository>();
+
 builder.Services.AddScoped<ICategoryService,CategoryService>();
+builder.Services.AddScoped<IExpenseService,ExpenseService>();
 
 var app = builder.Build();
 

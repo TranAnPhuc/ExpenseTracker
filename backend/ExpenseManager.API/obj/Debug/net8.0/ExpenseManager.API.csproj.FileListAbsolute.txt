@@ -32,3 +32,4 @@ D:\Desktop\Personal_Expense_Management_System\backend\ExpenseManager.API\obj\Deb
 D:\Desktop\Personal_Expense_Management_System\backend\ExpenseManager.API\obj\Debug\net8.0\ExpenseManager.API.pdb
 D:\Desktop\Personal_Expense_Management_System\backend\ExpenseManager.API\obj\Debug\net8.0\ExpenseManager.API.genruntimeconfig.cache
 D:\Desktop\Personal_Expense_Management_System\backend\ExpenseManager.API\obj\Debug\net8.0\ref\ExpenseManager.API.dll
+D:\Desktop\Personal_Expense_Management_System\backend\ExpenseManager.API\obj\Debug\net8.0\ExpenseManager.API.sourcelink.json
