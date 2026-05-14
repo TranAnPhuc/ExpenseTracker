@@ -22,16 +22,16 @@ namespace ExpenseManager.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<IActionResult> GetAllAsync()
         {
-            var expense = _service.GetAll();
+            var expense = await _service.GetAllAsync();
             return Ok(expense);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetExpenseById(int id)
+        public async Task<IActionResult> GetExpenseByIdAsync(int id)
         {
-            var expense = _service.GetById(id);
+            var expense = await _service.GetByIdAsync(id);
 
             if(expense == null)
             {
@@ -42,11 +42,11 @@ namespace ExpenseManager.API.Controllers
         } 
 
         [HttpPost]
-        public IActionResult CreateExpense([FromBody] Expense expense)
+        public async Task<IActionResult> CreateExpenseAsync([FromBody] Expense expense)
         {
             try
             {
-                var created = _service.Create(expense);
+                var created = await _service.CreateAsync(expense);
                 return Created($"api/expenses/{expense.Id}",created);
             }
             catch(ArgumentException ex)

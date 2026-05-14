@@ -8,8 +8,8 @@ namespace ExpenseManager.API.Services
 {
     public interface ICategoryService
     {
-        List<Category> GetAll();
-        Category? GetById(int id);
-        Category Create(Category category);
+        Task<List<Category>> GetAllAsync();
+        Task<Category?> GetByIdAsync(int id);
+        Task<Category> CreateAsync(Category category);
     }
 }

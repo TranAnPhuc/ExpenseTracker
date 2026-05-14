@@ -8,8 +8,8 @@ namespace ExpenseManager.API.Repositories
 {
     public interface ICategoryRepository
     {
-        List<Category> GetAll();
-        Category? GetById(int id);
-        void Add(Category category);
+        Task<List<Category>> GetAllAsync();
+        Task<Category?> GetByIdAsync(int id);
+        Task AddAsync(Category category);
     }
 }

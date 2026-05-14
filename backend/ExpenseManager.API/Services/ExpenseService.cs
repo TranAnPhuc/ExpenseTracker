@@ -16,17 +16,17 @@ namespace ExpenseManager.API.Services
             _repository = repository;
         }
 
-        public List<Expense> GetAll()
+        public async Task<List<Expense>> GetAllAsync()
         {
-            return _repository.GetAll();
+            return await _repository.GetAllAsync();
         }
 
-        public Expense GetById(int id)
+        public async Task<Expense> GetByIdAsync(int id)
         {
-            return _repository.GetById(id);
+            return await _repository.GetByIdAsync(id);
         }
 
-        public Expense Create(Expense expense)
+        public async Task<Expense> CreateAsync(Expense expense)
         {
             if(expense.Amount <= 0)
                 throw new ArgumentException("Số tiền phải lớn hơn 0");
@@ -34,9 +34,7 @@ namespace ExpenseManager.API.Services
             if(expense.Date > DateTime.Now)
                 throw new ArgumentException("Ngày chi tiêu không được ở tương lai");
             
-            expense.Id = new Random().Next(100,999);
-            
-            _repository.Add(expense);
+            await _repository.AddAsync(expense);
 
             return expense;
         }

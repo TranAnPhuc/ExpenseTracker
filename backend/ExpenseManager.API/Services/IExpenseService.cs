@@ -8,8 +8,8 @@ namespace ExpenseManager.API.Services
 {
     public interface IExpenseService
     {
-        List<Expense> GetAll();
-        Expense GetById(int id);
-        Expense Create(Expense expense);
+        Task<List<Expense>> GetAllAsync();
+        Task<Expense> GetByIdAsync(int id);
+        Task<Expense> CreateAsync(Expense expense);
     }
 }

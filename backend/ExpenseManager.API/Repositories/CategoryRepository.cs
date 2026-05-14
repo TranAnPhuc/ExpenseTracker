@@ -2,32 +2,35 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExpenseManager.API.Data;
 using ExpenseManager.API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseManager.API.Repositories
 {
     public class CategoryRepository : ICategoryRepository
     {
-        private static List<Category> _categories = new List<Category>
-        {
-            new Category { Id = 1, Name = "Mua sắm",  Description = "Quần áo" },
-            new Category { Id = 2, Name = "Đi chợ",   Description = "Mua cá"  },
-            new Category { Id = 3, Name = "Đi chơi",  Description = "Đầm sen" }
-        };
+        private readonly AppDbContext _context;
 
-        public List<Category> GetAll()
+        public CategoryRepository(AppDbContext context)
         {
-            return _categories;
+            _context = context;
         }
 
-        public Category GetById(int id)
+        public Task<List<Category>> GetAllAsync()
         {
-            return _categories.FirstOrDefault(category => category.Id == id);
+            return _context.Categories.ToListAsync();
+        }
+
+        public async Task<Category> GetByIdAsync(int id)
+        {
+            return await _context.Categories.FindAsync(id);
         }
         
-        public void Add(Category category)
+        public async Task AddAsync(Category category)
         {
-            _categories.Add(category);
+            await _context.Categories.AddAsync(category);
+            await _context.SaveChangesAsync();
         }
     }
 }

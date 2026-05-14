@@ -20,16 +20,16 @@ namespace ExpenseManager.API.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAllCategories()
+        public async Task<IActionResult> GetAllCategoriesAsync()
         {
-            var categories = _service.GetAll();
+            var categories = await _service.GetAllAsync();
             return Ok(categories);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetCategoryById(int id)
+        public async Task<IActionResult> GetCategoryByIdAsync(int id)
         {
-            var category= _service.GetById(id);
+            var category= await _service.GetByIdAsync(id);
 
             if(category == null)
             {
@@ -40,14 +40,14 @@ namespace ExpenseManager.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateCategory([FromBody] Category category)
+        public async Task<IActionResult> CreateCategoryAsync([FromBody] Category category)
         {
             if (string.IsNullOrWhiteSpace(category.Name))
             {
                 return BadRequest(new {message = "Tên danh mục không được để trống"});
             }
             
-            var created = _service.Create(category);
+            var created = await _service.CreateAsync(category);
             return Created($"/api/categories/{category.Id}",created);
         }
     }

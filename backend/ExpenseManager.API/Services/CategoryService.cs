@@ -16,20 +16,19 @@ namespace ExpenseManager.API.Services
             _repository = repository;
         }
 
-        public List<Category> GetAll()
+        public async Task<List<Category>> GetAllAsync()
         {
-            return _repository.GetAll();
+            return await _repository.GetAllAsync();
         }
 
-        public Category GetById(int id)
+        public async Task<Category> GetByIdAsync(int id)
         {
-            return _repository.GetById(id);
+            return await _repository.GetByIdAsync(id);
         }
 
-        public Category Create(Category category)
+        public async Task<Category> CreateAsync(Category category)
         {
-            category.Id = new Random().Next(100,999);
-            _repository.Add(category);
+            await _repository.AddAsync(category);
             return category;
         }
     }

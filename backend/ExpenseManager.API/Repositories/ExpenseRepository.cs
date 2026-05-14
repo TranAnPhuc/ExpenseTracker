@@ -2,32 +2,35 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExpenseManager.API.Data;
 using ExpenseManager.API.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseManager.API.Repositories
 {
     public class ExpenseRepository : IExpenseRepository
     {
-        private static List<Expense> _expense = new List<Expense>
-        {
-            new Expense { Id = 1, Description = "Groceries", Amount = 150.00m, Date = DateTime.Now.AddDays(-2) },
-            new Expense { Id = 2, Description = "Electricity Bill", Amount = 75.50m, Date = DateTime.Now.AddDays(-10) },
-            new Expense { Id = 3, Description = "Internet Bill", Amount = 60.00m, Date = DateTime.Now.AddDays(-5) }
-        };
+        private readonly AppDbContext _context;
 
-        public List<Expense> GetAll()
+        public ExpenseRepository(AppDbContext context)
         {
-            return _expense;
+            _context = context;
         }
 
-        public Expense GetById(int id)
+        public async Task<List<Expense>> GetAllAsync()
         {
-            return _expense.FirstOrDefault(expense => expense.Id == id);
+            return await _context.Expenses.ToListAsync();
         }
 
-        public void Add(Expense expense)
+        public async Task<Expense> GetByIdAsync(int id)
         {
-            _expense.Add(expense);
+            return await _context.Expenses.FindAsync(id);
+        }
+
+        public async Task AddAsync(Expense expense)
+        {
+            await _context.Expenses.AddAsync(expense);
+            await _context.SaveChangesAsync();
         }
     }
 }
