@@ -22,7 +22,7 @@ namespace ExpenseManager.API.Repositories
             return await _context.Expenses.ToListAsync();
         }
 
-        public async Task<Expense> GetByIdAsync(int id)
+        public async Task<Expense?> GetByIdAsync(int id)
         {
             return await _context.Expenses.FindAsync(id);
         }

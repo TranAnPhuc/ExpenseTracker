@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExpenseManager.API.Exceptions;
 using ExpenseManager.API.Models;
 using ExpenseManager.API.Repositories;
 
@@ -21,9 +22,12 @@ namespace ExpenseManager.API.Services
             return await _repository.GetAllAsync();
         }
 
-        public async Task<Category> GetByIdAsync(int id)
+        public async Task<Category?> GetByIdAsync(int id)
         {
-            return await _repository.GetByIdAsync(id);
+            var category = await _repository.GetByIdAsync(id);
+            if(category == null)
+                throw new NotFoundException("danh mục",id);
+            return category;
         }
 
         public async Task<Category> CreateAsync(Category category)

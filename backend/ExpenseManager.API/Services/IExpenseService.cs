@@ -9,7 +9,7 @@ namespace ExpenseManager.API.Services
     public interface IExpenseService
     {
         Task<List<Expense>> GetAllAsync();
-        Task<Expense> GetByIdAsync(int id);
+        Task<Expense?> GetByIdAsync(int id);
         Task<Expense> CreateAsync(Expense expense);
     }
 }

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExpenseManager.API.Exceptions;
 using ExpenseManager.API.Models;
 using ExpenseManager.API.Repositories;
 
@@ -21,18 +22,21 @@ namespace ExpenseManager.API.Services
             return await _repository.GetAllAsync();
         }
 
-        public async Task<Expense> GetByIdAsync(int id)
+        public async Task<Expense?> GetByIdAsync(int id)
         {
-            return await _repository.GetByIdAsync(id);
+            var expense = await _repository.GetByIdAsync(id);
+            if(expense == null)
+                throw new NotFoundException("chi tiêu",id);
+            return expense;
         }
 
         public async Task<Expense> CreateAsync(Expense expense)
         {
             if(expense.Amount <= 0)
-                throw new ArgumentException("Số tiền phải lớn hơn 0");
+                throw new BusinessException("Số tiền phải lớn hơn 0");
 
             if(expense.Date > DateTime.Now)
-                throw new ArgumentException("Ngày chi tiêu không được ở tương lai");
+                throw new BusinessException("Ngày chi tiêu không được ở tương lai");
             
             await _repository.AddAsync(expense);
 

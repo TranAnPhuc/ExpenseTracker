@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using ExpenseManager.API.DTOs;
+using ExpenseManager.API.DTOs.Expense;
 using ExpenseManager.API.Models;
 using ExpenseManager.API.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +27,7 @@ namespace ExpenseManager.API.Controllers
         public async Task<IActionResult> GetAllAsync()
         {
             var expense = await _service.GetAllAsync();
-            return Ok(expense);
+            return Ok(ApiResponse<List<Expense>>.Ok(expense));
         }
 
         [HttpGet("{id}")]
@@ -33,26 +35,22 @@ namespace ExpenseManager.API.Controllers
         {
             var expense = await _service.GetByIdAsync(id);
 
-            if(expense == null)
-            {
-                return NotFound(new {message = "Không có khoản chi được tìm thấy"});
-            }
-
-            return Ok(expense);
+            return Ok(ApiResponse<Expense>.Ok(expense));
         } 
 
         [HttpPost]
-        public async Task<IActionResult> CreateExpenseAsync([FromBody] Expense expense)
+        public async Task<IActionResult> CreateExpenseAsync([FromBody] CreateExpenseDto dto)
         {
-            try
+            var expense = new Expense
             {
-                var created = await _service.CreateAsync(expense);
-                return Created($"api/expenses/{expense.Id}",created);
-            }
-            catch(ArgumentException ex)
-            {
-                return BadRequest(new {message = ex.Message});
-            }
+                Description = dto.Description,
+                Amount = dto.Amount,
+                Date = dto.Date,
+                CategoryId = dto.CategoryId
+            };
+
+            var created = await _service.CreateAsync(expense);
+            return Created($"api/expenses/{expense.Id}",ApiResponse<Expense>.Ok(created,"Tạo chi tiêu thành công"));
         }
     }
 }

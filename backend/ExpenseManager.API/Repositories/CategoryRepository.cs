@@ -16,13 +16,12 @@ namespace ExpenseManager.API.Repositories
         {
             _context = context;
         }
-
         public Task<List<Category>> GetAllAsync()
         {
             return _context.Categories.ToListAsync();
         }
 
-        public async Task<Category> GetByIdAsync(int id)
+        public async Task<Category?> GetByIdAsync(int id)
         {
             return await _context.Categories.FindAsync(id);
         }

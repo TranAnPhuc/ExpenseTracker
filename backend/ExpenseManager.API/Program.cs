@@ -1,4 +1,5 @@
 using ExpenseManager.API.Data;
+using ExpenseManager.API.Middleware;
 using ExpenseManager.API.Repositories;
 using ExpenseManager.API.Services;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +30,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.MapControllers();
 

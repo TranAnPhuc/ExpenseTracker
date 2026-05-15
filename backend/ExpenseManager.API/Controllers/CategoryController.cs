@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExpenseManager.API.DTOs.Category;
 using ExpenseManager.API.Models;
 using ExpenseManager.API.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -40,13 +41,14 @@ namespace ExpenseManager.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCategoryAsync([FromBody] Category category)
+        public async Task<IActionResult> CreateCategoryAsync([FromBody] CreateCategoryDto dto)
         {
-            if (string.IsNullOrWhiteSpace(category.Name))
+            var category = new Category
             {
-                return BadRequest(new {message = "Tên danh mục không được để trống"});
-            }
-            
+                Name = dto.Name,
+                Description = dto.Description
+            };
+
             var created = await _service.CreateAsync(category);
             return Created($"/api/categories/{category.Id}",created);
         }
