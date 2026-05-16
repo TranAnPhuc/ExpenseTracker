@@ -17,7 +17,9 @@ D:\Desktop\Personal_Expense_Management_System\backend\ExpenseManager.API\bin\Deb
 D:\Desktop\Personal_Expense_Management_System\backend\ExpenseManager.API\bin\Debug\net8.0\ExpenseManager.API.pdb
 D:\Desktop\Personal_Expense_Management_System\backend\ExpenseManager.API\bin\Debug\net8.0\Azure.Core.dll
 D:\Desktop\Personal_Expense_Management_System\backend\ExpenseManager.API\bin\Debug\net8.0\Azure.Identity.dll
+D:\Desktop\Personal_Expense_Management_System\backend\ExpenseManager.API\bin\Debug\net8.0\BCrypt-Net-Next.dll
 D:\Desktop\Personal_Expense_Management_System\backend\ExpenseManager.API\bin\Debug\net8.0\Humanizer.dll
+D:\Desktop\Personal_Expense_Management_System\backend\ExpenseManager.API\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\Desktop\Personal_Expense_Management_System\backend\ExpenseManager.API\bin\Debug\net8.0\Microsoft.Bcl.AsyncInterfaces.dll
 D:\Desktop\Personal_Expense_Management_System\backend\ExpenseManager.API\bin\Debug\net8.0\Microsoft.CodeAnalysis.dll
 D:\Desktop\Personal_Expense_Management_System\backend\ExpenseManager.API\bin\Debug\net8.0\Microsoft.CodeAnalysis.CSharp.dll

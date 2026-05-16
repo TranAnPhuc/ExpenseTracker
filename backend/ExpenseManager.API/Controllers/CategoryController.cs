@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExpenseManager.API.DTOs;
 using ExpenseManager.API.DTOs.Category;
 using ExpenseManager.API.Models;
 using ExpenseManager.API.Services;
@@ -24,7 +25,7 @@ namespace ExpenseManager.API.Controllers
         public async Task<IActionResult> GetAllCategoriesAsync()
         {
             var categories = await _service.GetAllAsync();
-            return Ok(categories);
+            return Ok(ApiResponse<List<Category>>.Ok(categories));
         }
 
         [HttpGet("{id}")]
@@ -32,12 +33,7 @@ namespace ExpenseManager.API.Controllers
         {
             var category= await _service.GetByIdAsync(id);
 
-            if(category == null)
-            {
-                return NotFound(new { message = $"Không tìm thấy danh mục với id = {id}" });
-            }
-
-            return Ok(category);
+            return Ok(ApiResponse<Category>.Ok(category));
         }
 
         [HttpPost]
@@ -50,7 +46,7 @@ namespace ExpenseManager.API.Controllers
             };
 
             var created = await _service.CreateAsync(category);
-            return Created($"/api/categories/{category.Id}",created);
+            return Created($"/api/categories/{category.Id}",ApiResponse<Category>.Ok(created,"Tạo danh mục thành công"));
         }
     }
 }
