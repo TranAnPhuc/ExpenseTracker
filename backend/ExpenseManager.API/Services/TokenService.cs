@@ -24,7 +24,7 @@ namespace ExpenseManager.API.Services
 
         public string GenerateToken(User user)
         {
-            var claims= new[]
+            var claims = new[]
             {
                 new Claim(ClaimTypes.NameIdentifier,user.Id.ToString()),
                 new Claim(ClaimTypes.Email,user.Email),
@@ -46,7 +46,7 @@ namespace ExpenseManager.API.Services
                 signingCredentials: credentials
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(token); 
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace ExpenseManager.API.Repositories
 {
     public interface IExpenseRepository
     {
-        Task<List<Expense>> GetAllAsync();
+        Task<List<Expense>> GetAllByUserAsync(int userId);
         Task<Expense?> GetByIdAsync(int id);
         Task AddAsync(Expense expense);
     }

@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using ExpenseManager.API.Services;
 using ExpenseManager.API.DTOs.Auth;
 using ExpenseManager.API.DTOs;
+using System.Security.Claims;
+using ExpenseManager.API.Exceptions;
 
 namespace ExpenseManager.API.Controllers
 {
@@ -24,14 +26,14 @@ namespace ExpenseManager.API.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterDto dto)
         {
             var result = await _authService.RegisterAsync(dto);
-            return Created("", ApiResponse<AuthResponseDto>.Ok(result,"Đăng ký thành công"));
+            return Created("", ApiResponse<AuthResponseDto>.Ok(result, "Đăng ký thành công"));
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto dto)
         {
             var result = await _authService.LoginAsync(dto);
-            return Ok(ApiResponse<AuthResponseDto>.Ok(result,"Đăng nhập thành công"));
+            return Ok(ApiResponse<AuthResponseDto>.Ok(result, "Đăng nhập thành công"));
         }
     }
 }

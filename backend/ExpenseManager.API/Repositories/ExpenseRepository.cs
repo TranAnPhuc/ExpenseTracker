@@ -17,9 +17,11 @@ namespace ExpenseManager.API.Repositories
             _context = context;
         }
 
-        public async Task<List<Expense>> GetAllAsync()
+        public async Task<List<Expense>> GetAllByUserAsync(int userId)
         {
-            return await _context.Expenses.ToListAsync();
+            return await _context.Expenses
+                .Where(e => e.UserId == userId)
+                .ToListAsync();
         }
 
         public async Task<Expense?> GetByIdAsync(int id)

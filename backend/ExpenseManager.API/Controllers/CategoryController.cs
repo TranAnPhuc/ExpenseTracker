@@ -6,12 +6,14 @@ using ExpenseManager.API.DTOs;
 using ExpenseManager.API.DTOs.Category;
 using ExpenseManager.API.Models;
 using ExpenseManager.API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ExpenseManager.API.Controllers
 {
     [ApiController]
     [Route("api/categories")]
+    [Authorize]
     public class CategoryController : ControllerBase
     {
         private readonly ICategoryService _service;
@@ -31,7 +33,7 @@ namespace ExpenseManager.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCategoryByIdAsync(int id)
         {
-            var category= await _service.GetByIdAsync(id);
+            var category = await _service.GetByIdAsync(id);
 
             return Ok(ApiResponse<Category>.Ok(category));
         }
@@ -46,7 +48,7 @@ namespace ExpenseManager.API.Controllers
             };
 
             var created = await _service.CreateAsync(category);
-            return Created($"/api/categories/{category.Id}",ApiResponse<Category>.Ok(created,"Tạo danh mục thành công"));
+            return Created($"/api/categories/{category.Id}", ApiResponse<Category>.Ok(created, "Tạo danh mục thành công"));
         }
     }
 }
